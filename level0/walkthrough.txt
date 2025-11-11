@@ -1,0 +1,15 @@
+    
+- you can see here it is accessing the argv of the program 
+    - mov    eax,DWORD PTR [ebp+0xc]
+- then getting the second argument from argv (argv[1])
+    - add    eax,0x4
+- loading it into the argument of atoi and compare the return value of atoi with 0x1a7
+    - mov    eax,DWORD PTR [eax]
+    - mov    DWORD PTR [esp],eax
+    - call   0x8049710 <atoi>
+    - cmp    eax,0x1a7
+- for getting the flag to this level you just you need to pass  423 (0x1a7) as argument to the excutable 
+                    
+  
+  
+  
