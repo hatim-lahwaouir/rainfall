@@ -1,0 +1,8 @@
+    
+- The main function does not directly call the run function. 
+- The run function executes a system call (like execve or system) to spawn a shell by running the /bin/sh command. 
+- The main function uses the gets function, which is vulnerable to a stack-based buffer overflow attack. 
+- This vulnerability can be exploited to overwrite the stored return address (instead of "ret instruction") on the stack, diverting execution flow to call the run function and thus gain a command shell. 
+  
+  
+  
