@@ -1,0 +1,19 @@
+    
+- there is a buffer overflow using gets function in <p>
+- They are preventing overwriting the return address by only accepting a new address if the address, when bitwise ANDed  with the mask 0xb0000000 results in 0. 
+  - mov    eax,DWORD PTR [ebp+0x4] 
+  - 0x80484f5 <p+33>        mov    DWORD PTR [ebp-0xc],eax
+  - 0x80484f8 <p+36>        mov    eax,DWORD PTR [ebp-0xc]
+  - 0x80484fb <p+39>        and    eax,0xb0000000
+  - 0x8048500 <p+44>        cmp    eax,0xb0000000
+  - 0x8048505 <p+49>        jne    0x8048527 <p+83>
+  -   ...
+  - 0x8048522 <p+78>        call   0x80483d0 <_exit@plt>
+
+- we can see that strdup return addres is  always 0x0804a008 and 0x0804a008 & 0xb0000000 = 0
+  - using ltrace 
+  - strdup("fff")           = 0x0804a008
+- So, we can overwrite the original return address on the stack with the entry point of the strdup function, allowing program execution to continue there without immediately causing the program to exit. 
+- and give strdup bytes of a shellcode
+- [SHELL CODE] + [PADDING] + [Overwriting the return address]
+  
