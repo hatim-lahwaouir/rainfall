@@ -1,0 +1,17 @@
+    
+- from assembly and decompiler  
+- the program use fgets to protect it from buffer overflow  
+- but we see that there is Format String vulnerability
+- the buffer we provided to program is used as format argument in printf function 
+- to solve the problem we need to change value of variable at address 0x804988c to 0x40
+- we can use this payload to see at what offset we are getting into our input 
+    - python -c 'print "A" * 4 + "%x" * 4' | ./level3 
+    - output: AAAA 00000200 b7fd1ac0 b7ff37d0 41414141
+    - here we see that after 8 bytes  we are accessing the buffer that hold our input
+
+- then we write the first 16 with the address of variables we want to change  
+- trying to write 0x40 bytes to stdoutput  and writing it into the address of that variables using `%n` format specifier
+- to by pass the check and get access to the shell
+- note: this is just an example of how i created the payload but you can find different payloads, just you need to write 0x40 bytes before accessing the address of variable you want to change  and write to it using %n format specifier 
+
+  - [0x40 bytes] [ 0x804988c  here must exists the address of variable  and palce %n to write to it]
