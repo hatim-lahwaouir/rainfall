@@ -1,0 +1,11 @@
+- we can understand from reading asm, and the output of the decompiler
+- There is a Format string vulnerability
+- to pass the level we need to change value of a variable that exists at this address 0x8049810 to this value 0x1025544 
+- we can see that fgets limit to reading only 0x200 bytes
+- we are going to use the simple attack with "%n"
+- but how we are going to write 0x1025544 ? 
+  - we are going to use the padding feature that printf format provide to us
+  - %60x will write the hexadecimal of the address and append to it until it's size is 60 
+
+- you will find the payload that  write  0x1025544 in payload.txt and write to the variable using the %n specifier
+
