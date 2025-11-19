@@ -1,0 +1,6 @@
+https://reverseengineering.stackexchange.com/questions/1992/what-is-plt-got  What is PLT/GOT? 
+
+
+https://www.youtube.com/watch?v=nC1U1LJQL8o In-depth: ELF - The Extensible & Linkable Format
+
+

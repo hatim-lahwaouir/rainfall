@@ -1,0 +1,16 @@
+- from asm we can see a string format vulnerability 
+- for us the call is to call the o function cause it will give us access to the shell
+- we can see and exit function call so changing the return address won't do anything
+- but we can overwrite the address of exit function in the GOT  with address of o
+  - 0x8049838 <exit@got.plt>:       0x080483d6 
+  - 0x80484a4 <o>:  0x83e58955
+
+- python -c 'print "A" * 4 + "%x" * 4' | ./level5
+  - we can see that after four values in stack  we are getting to our own buffer
+  - we can use that to write the address of exit and the GOT table 
+  - then ovewrite it  with addres  of o function using the format string %n
+  - you can see final payload in payload.txt file
+
+
+
+
