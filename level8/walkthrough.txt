@@ -1,0 +1,46 @@
+- observation:
+ - the program accept inputs
+ - then print address of two variables
+ - in assembly we can see that it's  calling printf passing it address of these variables
+  - <auth> at address 0x8049aac
+  - <service> at address 0x8049ab0 
+ - after speending some times reading assembly we can see that the program has 4 functionality 
+  - "auth ", "reset","service" and "login"
+  - the functionnality choosen are controlled by the input you give to the program
+  - it compares if the input start  of one of these functionnality 
+  - we can control  the program flow using the input
+  - Example:
+    - 0x80486b5 <main+337>    lea    eax,[esp+0x20] // loads the address of our input
+    - 0x80486b9 <main+341>    mov    edx,eax
+    - 0x80486bb <main+343>    mov    eax,0x804882d // then load the address of "login"
+    -  .  // here some assmebly code to start comparing the input if it starts with one of these functionalities
+    - 0x80486c9 <main+357>    repz cmps BYTE PTR ds:[esi],BYTE PTR es:[edi]
+    - 0x80486da <main+374>    test   eax,eax 
+    - 0x80486dc <main+376>    jne    0x8048574 <main+16> // here if they are not equal it jumps to check onother functionality or get the input again  
+ - the two functionalties the most interested are these three 
+  - auth allocate a four byte in the heap and strcpy an address to it
+  - service do an strdup of strings less then 30 bytes after "service ....." 
+  - login is the most intersting one because it's  give us access to the shell but in one condition if the address after 0x20 bytes from the the one pointed to by auth  is not null 
+
+- exploit
+ - using ltrace we can see  that address returned by malloc, and strdup start at 0x0804a008  we can abuse this functionality
+ - first calling the auth functionnality  malloc will return 0x0804a008
+ - then calling service two times so that strdup will return these two addresses 0x0804a018, 0x0804a028 
+ 													                          [address that auth point to] +   [the offset login check after address that auth point to]
+ - so now the value in this address in not null 0x0804a028 which login check for it to give us access to the shell (0x0804a028) = (0x0804a028                  +   0x20   )
+ - then we call login  to get access to the shell
+
+
+
+  
+  
+
+
+
+
+
+
+  
+
+ 
+

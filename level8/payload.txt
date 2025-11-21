@@ -1,0 +1,1 @@
+(echo -e "auth \nservice \nservice \nlogin"; cat -) | ./level8
